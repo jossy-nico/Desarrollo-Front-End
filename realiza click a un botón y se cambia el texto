@@ -1,0 +1,45 @@
+// Selecciona el botón y el elemento de texto
+let boton = document.querySelector('#cambiarTextoBtn');
+let texto = document.querySelector('#texto');
+
+// Añade un evento de clic al botón
+boton.addEventListener('click', function () {
+    // Cambia el texto del elemento
+    texto.innerText = 'Este es el nuevo texto.';
+});
+
+Sí, puedes hacer lo mismo con una clase en lugar de un ID. En lugar de usar document.querySelector para seleccionar un único elemento por ID, puedes usar
+document.querySelectorAll para seleccionar todos los elementos que tienen una clase específica y luego iterar sobre ellos para agregar los eventos de clic y cambiar el texto.
+// Selecciona todos los botones y elementos de texto
+let botones = document.querySelectorAll('.cambiarTextoBtn');
+let textos = document.querySelectorAll('.texto');
+
+// Itera sobre los botones y añade un evento de clic a cada uno
+botones.forEach((boton, index) => {
+    boton.addEventListener('click', function () {
+        // Cambia el texto del elemento correspondiente
+        textos[index].innerText = 'Este es el nuevo texto.';
+    });
+});
+
+Si deseas manejar el cambio de texto para una clase específica sin usar querySelectorAll, puedes utilizar querySelector
+para seleccionar un solo elemento con esa clase. Sin embargo, querySelector solo selecciona el primer elemento que coincide con la clase, 
+por lo que si tienes varios elementos con la misma clase, solo el primero será seleccionado.
+Si quieres evitar querySelectorAll y aún manejar múltiples elementos, una opción es añadir un evento de clic al contenedor padre y utilizar el método de delegación de eventos.
+
+// Selecciona el contenedor principal
+let contenedor = document.body;
+
+// Añade un evento de clic al contenedor
+contenedor.addEventListener('click', function (evento) {
+    // Verifica si el clic fue en un botón con la clase 'cambiarTextoBtn'
+    if (evento.target && evento.target.classList.contains('cambiarTextoBtn')) {
+        // Encuentra el párrafo de texto hermano más cercano
+        let texto = evento.target.previousElementSibling;
+        // Cambia el texto del párrafo
+        if (texto && texto.classList.contains('texto')) {
+            texto.innerText = 'Este es el nuevo texto.';
+        }
+    }
+});
+
